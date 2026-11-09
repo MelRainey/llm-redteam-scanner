@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llm-redteam-scanner"
+version = "0.1.0"
+description = "Red-team an OpenAI-compatible LLM endpoint for prompt injection, jailbreaks, and leakage, mapped to the OWASP Top 10 for LLM Applications (2025)."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Mel Rainey" }]
+keywords = ["ai-security", "prompt-injection", "jailbreak", "owasp", "llm-security", "red-team"]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Security",
+]
+dependencies = [
+  "typer>=0.12",
+  "rich>=13.7",
+  "openai>=1.40",
+]
+
+[project.urls]
+Homepage = "https://github.com/MelRainey/llm-redteam-scanner"
+Issues = "https://github.com/MelRainey/llm-redteam-scanner/issues"
+
+[project.scripts]
+llmscan = "llm_redteam_scanner.cli:app"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_redteam_scanner"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+ignore = [
+  "B008", # typer's CLI options/arguments are meant to be called in defaults
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
